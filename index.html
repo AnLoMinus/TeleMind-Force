@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>TeleMind Force – TeleKineFlow · SparKing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="TeleMind Force – TMF: מאגר טלקינזיס–תודעה בסגנון SparKing. חיבור בין מדע המחשבה, אנרגיית לב וקו קבלי." />
+  <style>
+    /* ===== בסיס כללי ===== */
+    :root {
+      --bg-main: radial-gradient(circle at top, #2b1b57 0, #050611 45%, #020308 100%);
+      --accent-1: #f5e06e;
+      --accent-2: #8ae2ff;
+      --accent-3: #ff71c2;
+      --text-main: #f7f7ff;
+      --text-soft: #c6c7f0;
+      --card-bg: rgba(7, 9, 22, 0.9);
+      --border-glow: rgba(245, 224, 110, 0.55);
+      --shadow-strong: 0 0 30px rgba(0, 0, 0, 0.8);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #02040a;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      background-image: var(--bg-main);
+      background-attachment: fixed;
+      color: var(--text-main);
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    @media (min-width: 900px) {
+      .page {
+        padding: 2.5rem 5vw 3.5rem;
+      }
+    }
+
+    /* ===== אפקטים כלליים ===== */
+    .glow-ring {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255, 255, 255, 0.04), transparent 55%),
+        radial-gradient(circle at 85% 10%, rgba(138, 226, 255, 0.18), transparent 60%),
+        radial-gradient(circle at 50% 90%, rgba(255, 113, 194, 0.18), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      z-index: 0;
+    }
+
+    .content-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    a {
+      color: var(--accent-2);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== כותרת ראשית / Hero ===== */
+    header.hero {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      header.hero {
+        grid-template-columns: 3fr 2fr;
+        gap: 2rem;
+      }
+    }
+
+    .hero-main-title {
+      font-size: clamp(2rem, 3.4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-soft);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(245, 224, 110, 0.5);
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: linear-gradient(135deg, rgba(7, 9, 22, 0.9), rgba(24, 19, 52, 0.9));
+      box-shadow: 0 0 14px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-main,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, #f5e06e, #ffb43a);
+      color: #261b00;
+      box-shadow: 0 0 18px rgba(245, 224, 110, 0.4);
+      font-weight: 700;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 26px rgba(245, 224, 110, 0.6);
+    }
+
+    .btn-ghost {
+      background: rgba(5, 7, 18, 0.9);
+      color: var(--accent-2);
+      border-color: rgba(138, 226, 255, 0.6);
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 22px rgba(138, 226, 255, 0.5);
+      background: radial-gradient(circle at top, rgba(9, 39, 71, 0.95), rgba(2, 4, 12, 0.95));
+    }
+
+    .hero-orbit {
+      position: relative;
+      border-radius: 24px;
+      padding: 1.8rem 1.5rem;
+      background: radial-gradient(circle at top, rgba(16, 24, 68, 0.95), rgba(4, 6, 18, 0.96));
+      border: 1px solid rgba(138, 226, 255, 0.35);
+      box-shadow: var(--shadow-strong);
+      overflow: hidden;
+    }
+
+    .hero-orbit::before,
+    .hero-orbit::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(18px);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+    }
+
+    .hero-orbit::before {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(245, 224, 110, 0.7), transparent 65%);
+      top: -30px;
+      left: -40px;
+    }
+
+    .hero-orbit::after {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(255, 113, 194, 0.8), transparent 70%);
+      bottom: -80px;
+      right: -60px;
+    }
+
+    .orbit-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-2);
+      margin-bottom: 0.35rem;
+    }
+
+    .orbit-main {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .orbit-sub {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      margin-bottom: 0.9rem;
+    }
+
+    .orbit-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+    }
+
+    .chip-soft {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(2, 5, 18, 0.85);
+      border: 1px solid rgba(245, 224, 110, 0.3);
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== ניווט עליון ===== */
+    nav.top-nav {
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding-block: 0.4rem;
+      background: linear-gradient(to bottom, rgba(2, 4, 14, 0.95), rgba(2, 4, 14, 0.7));
+      backdrop-filter: blur(14px);
+      border-radius: 999px;
+      border: 1px solid rgba(90, 110, 175, 0.6);
+      box-shadow: 0 0 26px rgba(0, 0, 0, 0.8);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-inline: 0.9rem;
+    }
+
+    .nav-title {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--text-soft);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      border-color: rgba(245, 224, 110, 0.65);
+      color: var(--accent-1);
+      background: rgba(8, 10, 25, 0.95);
+    }
+
+    /* ===== כרטיסי תוכן ===== */
+    section {
+      margin-bottom: 2.3rem;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 0.25rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 0.9rem;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 900px) {
+      .card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(8, 10, 28, 0.96), rgba(18, 18, 45, 0.98));
+      border-radius: 18px;
+      padding: 1rem 1rem 1.1rem;
+      border: 1px solid rgba(143, 163, 255, 0.35);
+      box-shadow: var(--shadow-strong);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(245, 224, 110, 0.15), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(138, 226, 255, 0.18), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .card-tagline {
+      font-size: 0.8rem;
+      color: var(--accent-2);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.6rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 224, 110, 0.4);
+      background: rgba(4, 6, 20, 0.95);
+    }
+
+    /* ===== רשימות מדורגות ===== */
+    .steps-list {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+
+    .steps-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem;
+      align-items: baseline;
+    }
+
+    .step-index {
+      font-size: 0.75rem;
+      color: var(--accent-1);
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 224, 110, 0.5);
+      background: rgba(8, 8, 18, 0.95);
+    }
+
+    /* ===== מטריצה / TK Map ===== */
+    .matrix-box {
+      margin-top: 0.9rem;
+      border-radius: 18px;
+      border: 1px solid rgba(245, 224, 110, 0.5);
+      background: radial-gradient(circle at top, rgba(16, 24, 60, 0.95), rgba(5, 6, 16, 0.97));
+      padding: 1rem;
+      box-shadow: var(--shadow-strong);
+    }
+
+    .matrix-tag {
+      font-size: 0.75rem;
+      color: var(--accent-1);
+      margin-bottom: 0.3rem;
+    }
+
+    .matrix-row {
+      display: grid;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    @media (min-width: 700px) {
+      .matrix-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .matrix-cell-label {
+      font-weight: 600;
+      color: var(--accent-2);
+      font-size: 0.85rem;
+    }
+
+    /* ===== פוטר ===== */
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.3rem;
+      border-top: 1px solid rgba(100, 120, 200, 0.7);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+    }
+
+    .hashtags {
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--accent-3);
+      word-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="glow-ring"></div>
+    <div class="content-wrap">
+      <!-- ניווט עליון -->
+      <nav class="top-nav">
+        <div class="nav-inner">
+          <div class="nav-title">
+            <span>🌀 TMF · TeleMind Force</span>
+            <span>| TK – TeleKineFlow</span>
+          </div>
+          <div class="nav-links">
+            <a href="#about">מה זה TK?</a>
+            <a href="#flow">איך זה עובד</a>
+            <a href="#levels">מדרגות הכוח</a>
+            <a href="#matrix">TK-Matrix</a>
+            <a href="#cta">התחלת מסע</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero ראשי -->
+      <header class="hero">
+        <div>
+          <div class="hero-main-title">
+            TeleMind Force · TK Mode
+          </div>
+          <div class="hero-sub">
+            מאגר טלקינזיס–תודעה בסגנון <strong>SparKing</strong> – חיבור בין מחשבה, אנרגיית לב וקו קבלי אחד זוהר.
+          </div>
+
+          <div class="hero-badge-row">
+            <div class="badge">⚡ Mind over Matter Engine</div>
+            <div class="badge">🧠 Focus · Emotion · Intention</div>
+            <div class="badge">✡ Kabbalah Layer Integrated</div>
+          </div>
+
+          <div class="hero-cta-row">
+            <a class="btn-main" href="#about">
+              🚀 התחלה מהירה · TK Overview
+            </a>
+            <a class="btn-ghost" href="#matrix">
+              🧩 מעבר למטריצת TK
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-orbit">
+          <div class="orbit-title">TK · TeleKineFlow Field</div>
+          <div class="orbit-main">"כוונה מדויקת מזיזה מציאות"</div>
+          <div class="orbit-sub">
+            כאן תבנה שדה מנטלי–אנרגטי:  
+            דמיון חד, רגש מתואם, נשימה מודעת – וערוץ קבלי שמצייר את המסלול.
+          </div>
+          <div class="orbit-chip-row">
+            <span class="chip-soft">🎯 Focus Nodes</span>
+            <span class="chip-soft">💓 Emotion Wave</span>
+            <span class="chip-soft">🌬 Breath Channel</span>
+            <span class="chip-soft">✡ Inner Sefirot Map</span>
+          </div>
+        </aside>
+      </header>
+
+      <!-- מדור: מה זה TK -->
+      <section id="about">
+        <div class="section-label">Overview · יסודות</div>
+        <h2 class="section-title">🧠 מהות TeleKineFlow – טלקינזיס כתודעה פעילה</h2>
+        <p class="section-sub">
+          טלקינזיס כאן מוגדר כיכולת <strong>להשפיע על חומר דרך תודעה</strong> – בלי מגע פיזי, אלא דרך שדה אנרגטי שנוצר מכוונה, רגש ודמיון מיושר.
+        </p>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-inner">
+              <h3 class="card-title">1️⃣ כוונה ממוקדת – Intent Vector</h3>
+              <div class="card-tagline">המחשבה הופכת ל"חץ" אנרגטי 🎯</div>
+              <p class="card-text">
+                ככל שהכוונה ברורה – מה בדיוק רוצים שיקרה, איפה, איך – השדה שנוצר סביב המחשבה נעשה צפוף וחד יותר.  
+                אין "סתם לחשוב", יש הגדרת וקטור: כיוון, עוצמה, מטרה.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-inner">
+              <h3 class="card-title">2️⃣ שדה אנרגטי יציב – Stable Field</h3>
+              <div class="card-tagline">התודעה כמו מגנט 🌐</div>
+              <p class="card-text">
+                הגוף, הנשימה והדופק יוצרים "עוגן" פיזי.  
+                כשאתה רגוע, הנשימה סדירה והלב פתוח – השדה שנוצר סביבך יציב, ואז ההשפעה על החומר נעשית מדויקת יותר.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-inner">
+              <h3 class="card-title">3️⃣ דמיון → רגש → פעולה</h3>
+              <div class="card-tagline">Visualization Chain ⚡</div>
+              <p class="card-text">
+                דמיון מצייר את התמונה, רגש נותן כוח, תודעה מבצעת.  
+                ב־TK אתה בונה שרשרת ברורה: מה אני רואה, מה אני מרגיש, מה אני מזיז – בפנים ובחוץ.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- מדור: איך זה עובד – 1 + 3 + 6 -->
+      <section id="flow">
+        <div class="section-label">TK Flow · תהליך</div>
+        <h2 class="section-title">🌊 איך TeleMind Force זורם – שלבי הפעלה</h2>
+        <p class="section-sub">
+          כאן אתה מחבר בין ההסבר העמוק (1), המאגר הטכנולוגי (3), והיסוד הקבלי–רוחני (6) למסלול פעולה אחד ברור.
+        </p>
+
+        <ul class="steps-list">
+          <li>
+            <span class="step-index">שלב 1</span>
+            <span>
+              📘 <strong>לימוד יסודות TK:</strong> להבין מהי כוונה, מהו שדה אנרגטי, ואיך דמיון–רגש–נשימה יוצרים יחד כוח אחד.
+            </span>
+          </li>
+          <li>
+            <span class="step-index">שלב 2</span>
+            <span>
+              ✡ <strong>חיבור קבלי:</strong> לראות איך עולם המחשבה (בריאה), עולם הרגש (יצירה) ועולם המעשה (עשיה) מסתדרים בקו אחד.
+            </span>
+          </li>
+          <li>
+            <span class="step-index">שלב 3</span>
+            <span>
+              🧩 <strong>מיפוי במאגר GitHub:</strong> כל מדרגה מקבלת קובץ, תרשים, מטריצה וטבלת תרגול – כדי שתוכל לחזור, לשכפל ולשדרג.
+            </span>
+          </li>
+          <li>
+            <span class="step-index">שלב 4</span>
+            <span>
+              🧪 <strong>אימון יומי:</strong> תרגילי נשימה, פוקוס, צפייה בחפץ, מדיטציה עם כוונה – הכל כתוב ברור, לפי רמות.
+            </span>
+          </li>
+          <li>
+            <span class="step-index">שלב 5</span>
+            <span>
+              🌌 <strong>שילוב בשגרה:</strong> הכנסת TK למעשים קטנים – סנכרון תודעה לפני שיחה, לפני יצירה, לפני פעולה.
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- מדור: מדרגות כוח -->
+      <section id="levels">
+        <div class="section-label">Levels · מדרגות</div>
+        <h2 class="section-title">🏔 מדרגות TeleMind – 3 שכבות כוח עיקריות</h2>
+        <p class="section-sub">
+          בקו הקבלי–תודעתי, ההשפעה מתחילה פנימה, מתרחבת לסביבה – ורק אז נוגעת בחומר.
+        </p>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-inner">
+              <h3 class="card-title">🔹 מדרגה 1 – הרהור פנימי</h3>
+              <div class="card-tagline">Self-Field · שדה פנימי</div>
+              <p class="card-text">
+                המחשבה משנה את מי שאתה: מצב רוח, עמידה, נשימה, תדר.  
+                כאן אתה לומד לשלוט במעברים: פחד → רוגע, בלבול → בהירות, יאוש → תקווה.
+              </p>
+              <div class="pill-row">
+                <span class="pill">🧘‍♂️ Regulate</span>
+                <span class="pill">🔄 Reframe</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-inner">
+              <h3 class="card-title">🔹 מדרגה 2 – השפעה על סביבה</h3>
+              <div class="card-tagline">Aura Field · הילה פעילה</div>
+              <p class="card-text">
+                שדה הלב, העיניים והנוכחות משפיע על מי שנמצא לידך.  
+                כאן אתה לומד להיכנס לחדר ולהרים את התדר – בלי מילה – רק דרך מצב פנימי יציב.
+              </p>
+              <div class="pill-row">
+                <span class="pill">🤝 Presence</span>
+                <span class="pill">💓 Heart Wave</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-inner">
+              <h3 class="card-title">🔹 מדרגה 3 – השפעה על חומר</h3>
+              <div class="card-tagline">Matter Touch · TK Edge</div>
+              <p class="card-text">
+                כאן אתה עובד על קצה–קצהו של הרעיון: סנכרון מלא בין מחשבה, רגש, גוף ודיבור.  
+                הניסוי הוא עדין, ממושמע, זהיר – מתוך כבוד לבריאה ולא כ"טריק".
+              </p>
+              <div class="pill-row">
+                <span class="pill">⚖ Responsibility</span>
+                <span class="pill">✡ Alignment</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- מדור: TK Matrix -->
+      <section id="matrix">
+        <div class="section-label">Matrix · מיפוי תודעה</div>
+        <h2 class="section-title">🧩 TK–Matrix · מפת TeleMind Force</h2>
+        <p class="section-sub">
+          כאן יתחברו כל הקבצים: TK-Matrix.html, TK-Flow.json ו־TK-Graph.svg למפת־על אחת שתראה את כל השלבים.
+        </p>
+
+        <div class="matrix-box">
+          <div class="matrix-tag">TL;DR – שלושת צירי המטריצה</div>
+          <div class="matrix-row">
+            <div>
+              <div class="matrix-cell-label">🧠 ציר A – מחשבה</div>
+              מודעות, הגדרת כוונה, בהירות תמונה פנימית, שפה פנימית.
+            </div>
+            <div>
+              <div class="matrix-cell-label">💓 ציר B – רגש</div>
+              איזון לב–בטן, שחרור פחד, העלאת שמחה, חיבור למשמעות.
+            </div>
+            <div>
+              <div class="matrix-cell-label">🌬 ציר C – נשימה וגוף</div>
+              קצב נשימה, יציבה, מיקוד בעיניים, שקט מערכת העצבים.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- קריאה לפעולה -->
+      <section id="cta">
+        <div class="section-label">Start · התחלה</div>
+        <h2 class="section-title">🚀 TeleMind – הצעד הראשון שלך</h2>
+        <p class="section-sub">
+          ההמשך של העמוד הזה יהיה בנוי מקישורים ישירים לקבצי התרגול במאגר, מטריצות TK ודפי עבודה.  
+          כרגע – זו תחנת ההמראה שלך לתודעה פועלת.
+        </p>
+
+        <div class="card">
+          <div class="card-inner">
+            <h3 class="card-title">📌 מה לעשות מכאן?</h3>
+            <p class="card-text">
+              1. פתח את קובצי <strong>theory</strong> ולמד את הבסיס. <br />
+              2. עבור ל־<strong>practices</strong> כדי לבנות תרגול יומי. <br />
+              3. חזור לכאן כדי לראות את התמונה הגדולה ולכוון את המסלול.
+            </p>
+            <div class="pill-row">
+              <span class="pill">📘 Theory</span>
+              <span class="pill">🧪 Practice</span>
+              <span class="pill">🧩 Matrix</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- פוטר -->
+      <footer>
+        <div class="footer-row">
+          <div>
+            © 2025 · AnLoMinus – SparKing · Leon Yaakobov  
+            <br />TeleMind Force · TK · Mind over Matter Line
+          </div>
+          <div class="footer-links">
+            <a href="https://github.com/AnLoMinus/TeleMind-Force" target="_blank" rel="noopener">🐙 GitHub Repo · TeleMind-Force</a>
+            <a href="https://anlominus.github.io/TeleMind-Force/" target="_blank" rel="noopener">🌐 GitHub Pages · TK Home</a>
+          </div>
+        </div>
+
+        <div class="hashtags">
+          #TeleMindForce #TeleKineFlow #SparKing #AnLoMinus #MindOverMatter #KabbalahTech #TKMatrix
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
